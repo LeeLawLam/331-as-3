@@ -33,14 +33,19 @@
 """
 CMPUT 331 Assignment 3 Student Solution
 January 2026
-Author: <Your name here>
+Author: Louis Lam
 """
 
 def affine_key_count(m):
-    raise NotImplementedError
-    
+    import math
 
+    phi = 0
+    for a in range(m):
+        if math.gcd(a, m) == 1:
+            phi += 1
 
+    # total valid (a,b) pairs minus identity key (a=1, b=0)
+    return phi * m - 1
 
 def test():
     assert affine_key_count(65) == 3119

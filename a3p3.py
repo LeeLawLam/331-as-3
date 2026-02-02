@@ -33,13 +33,16 @@
 """
 CMPUT 331 Assignment 3 Student Solution
 January 2026
-Author: <Your name here>
+Author: Louis Lam
 """
 
 def random_generator(a, b, c, m, r0, r1, n):
-    raise NotImplementedError
-
-
+    out = []
+    for _ in range(n):
+        r2 = (a * r1 + b * r0 + c) % m
+        out.append(r2)
+        r0, r1 = r1, r2
+    return out
 
 def test():
     assert random_generator(3, 5, 9, 17, 11, 6, 3) == [14, 13, 16]

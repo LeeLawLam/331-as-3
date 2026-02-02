@@ -33,12 +33,31 @@
 """
 CMPUT 331 Assignment 3 Student Solution
 January 2026
-Author: <Your name here>
+Author: Louis Lam
 """
 
 def crack_rng(m, sequence):
     r2, r3, r4, r5, r6 = tuple(sequence)
-    pass
+
+    # differences
+    d2 = (r3 - r2) % m
+    d3 = (r4 - r3) % m
+    d4 = (r5 - r4) % m
+    d5 = (r6 - r5) % m
+
+    # determinant
+    det = (d3 * d3 - d2 * d4) % m
+    if det == 0:
+        raise ValueError("No unique solution (det=0 mod m)")
+
+    det_inv = pow(det, m - 2, m)  # valid since m is prime in this assignment
+
+    a = ((d4 * d3 - d2 * d5) % m) * det_inv % m
+    b = ((d3 * d5 - d4 * d4) % m) * det_inv % m
+
+    c = (r4 - (a * r3 + b * r2)) % m
+
+    return [a, b, c]
 
 def test():
     assert crack_rng(17, [14, 13, 16, 3, 13]) == [3, 5, 9]
